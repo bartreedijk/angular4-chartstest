@@ -1,7 +1,7 @@
-<ngx-charts-line-chart
+<ngx-charts-line-chart *ngIf="this.multi[0].series.length > 0"
   [view]="view"
   [scheme]="colorScheme"
-  [results]="single"
+  [results]="multi"
   [gradient]="gradient"
   [xAxis]="showXAxis"
   [yAxis]="showYAxis"
@@ -10,6 +10,5 @@
   [showYAxisLabel]="showYAxisLabel"
   [xAxisLabel]="xAxisLabel"
   [yAxisLabel]="yAxisLabel"
-  [autoScale]="autoScale"
   (select)="onSelect($event)">
 </ngx-charts-line-chart>
