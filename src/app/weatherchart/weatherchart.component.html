@@ -1,14 +1,21 @@
+<div>
+<input type='text' [value]="selectedCity" />
+<button (click)="onSubmit()">Get weather of selected city</button>
+</div>
+<div>
 <ngx-charts-line-chart *ngIf="this.multi[0].series.length > 0"
-  [view]="view"
-  [scheme]="colorScheme"
-  [results]="multi"
-  [gradient]="gradient"
-  [xAxis]="showXAxis"
-  [yAxis]="showYAxis"
-  [legend]="showLegend"
-  [showXAxisLabel]="showXAxisLabel"
-  [showYAxisLabel]="showYAxisLabel"
-  [xAxisLabel]="xAxisLabel"
-  [yAxisLabel]="yAxisLabel"
-  (select)="onSelect($event)">
+                       [view]="view"
+                       [scheme]="colorScheme"
+                       [results]="multi"
+                       [gradient]="gradient"
+                       [xAxis]="showXAxis"
+                       [yAxis]="showYAxis"
+                       [legend]="showLegend"
+                       [legendTitle]="legendTitle"
+                       [showXAxisLabel]="showXAxisLabel"
+                       [showYAxisLabel]="showYAxisLabel"
+                       [xAxisLabel]="xAxisLabel"
+                       [yAxisLabel]="yAxisLabel"
+                       (select)="onSelect($event)">
 </ngx-charts-line-chart>
+</div>

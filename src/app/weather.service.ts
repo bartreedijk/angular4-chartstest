@@ -1,15 +1,24 @@
-import { Injectable } from '@angular/core';
-import { Http, Response, Headers, RequestOptions } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
+import {Injectable} from '@angular/core';
+import {Http, Response, Headers, RequestOptions} from '@angular/http';
+import {Observable} from 'rxjs/Rx';
 
 @Injectable()
 export class WeatherService {
 
-  private URL = 'http://api.openweathermap.org/data/2.5/forecast?q=Breda,NL&units=metric&lang=nl&APPID=cf977452681e43b2caca170a492b4657';
+  private City = 'Breda';
+  private CountryCode = 'NL';
 
-  constructor(private http: Http) { }
+  private URL = 'http://api.openweathermap.org/data/2.5/forecast?q=' + this.City + ',' + this.CountryCode + '&units=metric&lang=nl&APPID=cf977452681e43b2caca170a492b4657';
 
-  doRequest(): Observable<any> {
+
+
+  constructor(private http: Http) {
+  }
+
+  doRequest(city: string): Observable<any> {
+    if (city.length > 0) {
+      this.City = city;
+    }
     return this.http.get(this.URL)
       .map(this.extractData)
       .catch(this.handleError);
@@ -27,10 +36,10 @@ export class WeatherService {
       this.handleError(Response);
     }
 
-    return body || { };
+    return body || {};
   }
 
-  private handleError (error: Response | any) {
+  private handleError(error: Response | any) {
     // In a real world app, you might use a remote logging infrastructure
     let errMsg: string;
     if (error instanceof Response) {
