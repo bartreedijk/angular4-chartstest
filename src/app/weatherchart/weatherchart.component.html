@@ -1,5 +1,5 @@
 <div>
-<input #cityInput type='text' [value]="selectedCity" />
+<input #cityInput type='text' [value]="selectedCity" (keyup.enter)="onSubmit(cityInput.value)" />
 <button (click)="onSubmit(cityInput.value)">Get weather of selected city</button>
 </div>
 <div>
