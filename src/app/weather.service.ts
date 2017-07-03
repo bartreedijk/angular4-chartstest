@@ -8,7 +8,9 @@ export class WeatherService {
   private City = 'Breda';
   private CountryCode = 'NL';
 
-  private URL = 'http://api.openweathermap.org/data/2.5/forecast?q=' + this.City + ',' + this.CountryCode + '&units=metric&lang=nl&APPID=cf977452681e43b2caca170a492b4657';
+  private appid = 'cf977452681e43b2caca170a492b4657';
+
+  private prefixURL = 'http://api.openweathermap.org/data/2.5/forecast?q=';
 
 
 
@@ -16,10 +18,12 @@ export class WeatherService {
   }
 
   doRequest(city: string): Observable<any> {
-    if (city.length > 0) {
+    if (!(city === '')) {
+      console.log('Request on: ' + city);
       this.City = city;
     }
-    return this.http.get(this.URL)
+    return this.http.get(
+      this.prefixURL + this.City + ',' + this.CountryCode + '&units=metric&lang=nl&APPID=' + this.appid)
       .map(this.extractData)
       .catch(this.handleError);
   }

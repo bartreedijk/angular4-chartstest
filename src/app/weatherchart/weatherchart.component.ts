@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {WeatherService} from '../weather.service';
 
 @Component({
@@ -9,17 +9,17 @@ import {WeatherService} from '../weather.service';
 })
 export class WeatherchartComponent implements OnInit {
   errorMessage: string;
+  selectedCity: string;
 
-  selectedCity = '';
 
-  multi: any[] = [
-    {
-      'name': '',
-      'series': []
-    },
-  ];
+  // multi is de array met lijnen in de grafiek.
+  multi: any[];
+
+  // visible is de boolean die aangeeft of de grafiek zichtbaar moet zijn.
+  visible: boolean;
 
   view: any[] = [1200, 400];
+
 
   // options
   showXAxis = true;
@@ -32,47 +32,71 @@ export class WeatherchartComponent implements OnInit {
   showYAxisLabel = true;
   yAxisLabel = 'Temperature';
 
+  intervalId;
+
   colorScheme = {
     domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
   };
 
   constructor(private weatherService: WeatherService) {
+    this.selectedCity = '';
   }
 
   onSelect(event) {
     console.log(event);
   }
 
-
-  onSubmit() {
-    this.requestWeather();
+  onSubmit(city: any) {
+    this.selectedCity = city;
+    this.requestWeather(this.selectedCity);
   }
 
   ngOnInit() {
-    this.requestWeather();
+    this.requestWeather('');
   }
 
-  requestWeather() {
-    this.weatherService.doRequest(this.selectedCity)
+  requestWeather(city: string) {
+    this.visible = false;
+    this.weatherService.doRequest(city)
       .subscribe(
-        data => {
-          this.multi[0].name = data.city.name;
-          for (let v = 0; v < data.list.length; v++) {
-            this.multi[0].series[v] = {
-
-              name: data.list[v].dt_txt,
-              value: data.list[v].main.temp
-            };
-          }
-
-        },
+        data => this.fillChart(data),
         error => this.errorMessage = <any>error,
       );
   }
 
+  fillChart(data: any) {
+    // We hebben nu 1 object nodig binnen de array.
+    // name is de naam van de lijn binnen het object (in de array multi)
+    // series zijn de waarden van de lijn binnen het object (in de array multi)
+    this.multi  = [
+      {
+        'name': '',
+        'series': []
+      },
+    ];
+    // vul naam van lijn met de stadsnaam. Standaard is dit Breda, zie de service.
+    this.multi[0].name = data.city.name;
+    // Vul de series array met data, name staat voor de xAxisLabels en value voor de waarde in de grafiek zelf.
+    for (let v = 0; v < data.list.length; v++) {
+      this.multi[0].series.push({'name': data.list[v].dt_txt, 'value': data.list[v].main.temp});
+    }
+    this.visible = true;
+  }
+
 }
 
+
+
 /*
+
+export var multi = [
+  {
+    'name': '',
+    'series': []
+  },
+];
+
+
  [
  {
  'name': 'Temperature',
