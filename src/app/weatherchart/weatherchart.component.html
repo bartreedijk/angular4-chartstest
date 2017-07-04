@@ -1,8 +1,19 @@
 <div>
-<input #cityInput type='text' [value]="selectedCity" (keyup.enter)="onSubmit(cityInput.value)" />
-<button (click)="onSubmit(cityInput.value)">Get weather of selected city</button>
+  <!--
+  deze input tag heeft #cityInput meegekregen zodat de button de value ervan mee kan krijgen.
+  verder is op de keyup.enter event (loslaten van de enter-knop dezelfde methode gekoppeld als bij de button
+  -->
+  <input #cityInput type='text' [value]="selectedCity" (keyup.enter)="onSubmit(cityInput.value)"/>
+
+  <!--
+  De button zorgt ervoor dat een event wordt gefired richting de model.
+  -->
+  <button (click)="onSubmit(cityInput.value)">Get weather of selected city</button>
 </div>
 <div>
+  <!--
+  Dit is de LineChartComponent zelf. Alle parameters zijn terug te vinden in de model.
+  -->
   <ngx-charts-line-chart *ngIf="visible == true"
                          [view]="view"
                          [scheme]="colorScheme"
@@ -15,7 +26,6 @@
                          [showXAxisLabel]="showXAxisLabel"
                          [showYAxisLabel]="showYAxisLabel"
                          [xAxisLabel]="xAxisLabel"
-                         [yAxisLabel]="yAxisLabel"
-                         (select)="onSelect($event)">
+                         [yAxisLabel]="yAxisLabel">
   </ngx-charts-line-chart>
 </div>

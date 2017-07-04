@@ -43,8 +43,8 @@ export class WeatherService {
     return body || {};
   }
 
+  // handel alle problemen af, handig voor debugging. Methode is te vinden bij Tour of Heroes van angular.io
   private handleError(error: Response | any) {
-    // In a real world app, you might use a remote logging infrastructure
     let errMsg: string;
     if (error instanceof Response) {
       const body = error.json() || '';

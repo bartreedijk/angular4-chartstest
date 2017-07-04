@@ -32,18 +32,12 @@ export class WeatherchartComponent implements OnInit {
   showYAxisLabel = true;
   yAxisLabel = 'Temperature';
 
-  intervalId;
-
   colorScheme = {
     domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
   };
 
   constructor(private weatherService: WeatherService) {
     this.selectedCity = '';
-  }
-
-  onSelect(event) {
-    console.log(event);
   }
 
   onSubmit(city: any) {
