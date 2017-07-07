@@ -9,8 +9,9 @@ import {WeatherService} from '../weather.service';
 })
 export class WeatherchartComponent implements OnInit {
   errorMessage: string;
-  selectedCity: string;
 
+  // de string die gekoppeld is met de input box in HTML
+  selectedCity: string;
 
   // multi is de array met lijnen in de grafiek.
   multi: any[];
@@ -18,8 +19,8 @@ export class WeatherchartComponent implements OnInit {
   // visible is de boolean die aangeeft of de grafiek zichtbaar moet zijn.
   visible: boolean;
 
+  // de view array bepaalt de grootte van de grafiek
   view: any[] = [1200, 400];
-
 
   // options
   showXAxis = true;
@@ -40,6 +41,7 @@ export class WeatherchartComponent implements OnInit {
     this.selectedCity = '';
   }
 
+  // onSubmit is een event die gekoppeld is aan de HTML button.
   onSubmit(city: any) {
     this.selectedCity = city;
     this.requestWeather(this.selectedCity);
@@ -50,7 +52,11 @@ export class WeatherchartComponent implements OnInit {
   }
 
   requestWeather(city: string) {
+    // eerst wordt de chart component gedisabled middels *ngIf. Zie HTML.
     this.visible = false;
+
+    // dan wordt de geabboneerd op de weatherService middels een .subscribe,
+    // waarbij de data die binnenkomt naar de fillChart methode gestuurd wordt.
     this.weatherService.doRequest(city)
       .subscribe(
         data => this.fillChart(data),
@@ -74,6 +80,8 @@ export class WeatherchartComponent implements OnInit {
     for (let v = 0; v < data.list.length; v++) {
       this.multi[0].series.push({'name': data.list[v].dt_txt, 'value': data.list[v].main.temp});
     }
+
+    // als alles klaar is, kan de chart weer zichtbaar worden op de front-end.
     this.visible = true;
   }
 
