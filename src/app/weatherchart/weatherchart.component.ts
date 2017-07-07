@@ -5,6 +5,7 @@ import {WeatherService} from '../weather.service';
   selector: 'app-weatherchart',
   templateUrl: './weatherchart.component.html',
   styleUrls: ['./weatherchart.component.css'],
+  // geef aan dat WeatherService provider moet zijn als service van data.
   providers: [WeatherService]
 })
 export class WeatherchartComponent implements OnInit {
